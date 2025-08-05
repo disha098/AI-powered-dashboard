@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADmyBRAND Insights - Analytics Dashboard</title>
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/index.min.js"></script>
+</head>
+<body class="light-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>ADmyBRAND</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#overview">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#analytics">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#campaigns">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Campaigns</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Dashboard Overview</h1>
+                </div>
+                <div class="header-right">
+                    <div class="date-range">
+                        <i class="fas fa-calendar"></i>
+                        <span id="dateRange">Last 30 days</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User">
+                        <span>John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Key Metrics Cards -->
+                <section class="metrics-section">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Total Revenue</h3>
+                                <p class="metric-value" id="revenueValue">$124,563</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12.5%
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Active Users</h3>
+                                <p class="metric-value" id="usersValue">45,892</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8.2%
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon conversions">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Conversions</h3>
+                                <p class="metric-value" id="conversionsValue">2,847</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +15.3%
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon growth">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Growth Rate</h3>
+                                <p class="metric-value" id="growthValue">23.4%</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +5.7%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <section class="charts-section">
+                    <div class="charts-grid">
+                        <!-- Revenue Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Revenue Trend</h3>
+                                <div class="chart-actions">
+                                    <button class="btn-export" onclick="exportChart('revenue')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- User Activity Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>User Activity</h3>
+                                <div class="chart-actions">
+                                    <button class="btn-export" onclick="exportChart('users')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="usersChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Traffic Sources -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Traffic Sources</h3>
+                                <div class="chart-actions">
+                                    <button class="btn-export" onclick="exportChart('traffic')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="trafficChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data Table Section -->
+                <section class="table-section">
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3>Recent Campaigns</h3>
+                            <div class="table-actions">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="searchInput" placeholder="Search campaigns...">
+                                </div>
+                                <button class="btn-export" onclick="exportTable()">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="campaignsTable">
+                                <thead>
+                                    <tr>
+                                        <th data-sort="name">Campaign Name <i class="fas fa-sort"></i></th>
+                                        <th data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                        <th data-sort="budget">Budget <i class="fas fa-sort"></i></th>
+                                        <th data-sort="spent">Spent <i class="fas fa-sort"></i></th>
+                                        <th data-sort="impressions">Impressions <i class="fas fa-sort"></i></th>
+                                        <th data-sort="clicks">Clicks <i class="fas fa-sort"></i></th>
+                                        <th data-sort="ctr">CTR <i class="fas fa-sort"></i></th>
+                                        <th data-sort="conversions">Conversions <i class="fas fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="campaignsTableBody">
+                                    <!-- Table data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-pagination">
+                            <div class="pagination-info">
+                                <span id="paginationInfo">Showing 1-10 of 50 campaigns</span>
+                            </div>
+                            <div class="pagination-controls">
+                                <button class="btn-pagination" id="prevPage" disabled>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="page-numbers" id="pageNumbers">
+                                    <!-- Page numbers will be generated by JavaScript -->
+                                </div>
+                                <button class="btn-pagination" id="nextPage">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading dashboard data...</p>
+        </div>
+    </div>
+
+    <script src="dashboard-script.js"></script>
+</body>
+</html> 
